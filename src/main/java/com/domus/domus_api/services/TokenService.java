@@ -26,4 +26,19 @@ public class TokenService {
                 .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS))
                 .sign(algorithm);
     }
+
+    // Método para ler o token, validar a assinatura e extrair o e-mail (subject)
+    public String validateToken(String token) {
+        try {
+            Algorithm algorithm = Algorithm.HMAC256(secret);
+            return JWT.require(algorithm)
+                    .withIssuer("domus-api")
+                    .build()
+                    .verify(token)
+                    .getSubject();
+        } catch (Exception exception) {
+            // Se o token for inválido, expirado ou adulterado, retorna vazio
+            return ""; 
+        }
+    }
 }
