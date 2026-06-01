@@ -22,6 +22,9 @@ public class Multa {
     @Column(nullable = false)
     private LocalDate dataAplicacao = LocalDate.now();
 
+    @Column(nullable = false)
+    private String status = "ATIVA"; // Prepara a tabela para futuras anulações
+
     // Vincula a multa ao morador infrator
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)

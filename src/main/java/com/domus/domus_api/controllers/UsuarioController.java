@@ -27,7 +27,8 @@ public class UsuarioController {
         
         // Agora sim, salvamos no banco
         Usuario usuarioSalvo = usuarioRepository.save(novoUsuario);
-        
+        usuarioSalvo.setSenha(null); // Impede que a hash vaze na resposta da API
+
         return ResponseEntity.status(HttpStatus.CREATED).body(usuarioSalvo);
     }
 }

@@ -28,4 +28,7 @@ public class Usuario {
 
     @Column(nullable = false)
     private String perfil; // N1, N2, N3, N4 ou N5
+
+    @Column(nullable = false)
+    private Boolean ativo = true; // Prepara o terreno para o Soft Delete futuro
 }

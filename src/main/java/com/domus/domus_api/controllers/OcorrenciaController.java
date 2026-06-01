@@ -17,7 +17,7 @@ public class OcorrenciaController {
 
     // Apenas moradores podem registrar incidentes. Outros recebem 403.
     @PostMapping
-    @PreAuthorize("hasAuthority('MORADOR')")
+    @PreAuthorize("hasAuthority('N5')")
     public ResponseEntity<Ocorrencia> registrarOcorrencia(@RequestBody Ocorrencia novaOcorrencia) {
         Ocorrencia ocorrenciaSalva = ocorrenciaRepository.save(novaOcorrencia);
         return ResponseEntity.status(HttpStatus.CREATED).body(ocorrenciaSalva);

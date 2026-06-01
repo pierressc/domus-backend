@@ -5,6 +5,7 @@ import com.domus.domus_api.repositories.UnidadeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -17,6 +18,7 @@ public class UnidadeController {
 
     // Rota para CADASTRAR a unidade (RF04)
     @PostMapping
+    @PreAuthorize("hasAuthority('N2')")
     public ResponseEntity<Unidade> cadastrarUnidade(@RequestBody Unidade novaUnidade) {
         Unidade unidadeSalva = unidadeRepository.save(novaUnidade);
         return ResponseEntity.status(HttpStatus.CREATED).body(unidadeSalva);

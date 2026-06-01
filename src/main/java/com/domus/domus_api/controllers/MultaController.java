@@ -17,7 +17,7 @@ public class MultaController {
 
     // Apenas o Síndico pode aplicar multas. Qualquer outro recebe 403.
     @PostMapping
-    @PreAuthorize("hasAuthority('SINDICO')")
+    @PreAuthorize("hasAuthority('N2')")
     public ResponseEntity<Multa> aplicarMulta(@RequestBody Multa novaMulta) {
         Multa multaSalva = multaRepository.save(novaMulta);
         return ResponseEntity.status(HttpStatus.CREATED).body(multaSalva);

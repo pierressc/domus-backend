@@ -5,6 +5,7 @@ import com.domus.domus_api.repositories.ReservaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 import java.util.Optional;
@@ -18,6 +19,7 @@ public class ReservaController {
 
     // RF05: Morador solicita uma nova reserva
     @PostMapping
+    @PreAuthorize("hasAuthority('N5')")
     public ResponseEntity<Reserva> solicitarReserva(@RequestBody Reserva novaReserva) {
         
         // Como você definiu private String status = "PENDENTE" lá na entidade,
@@ -30,6 +32,7 @@ public class ReservaController {
 
     // RF06: Síndico atualiza a reserva (Aprovar ou Cancelar)
     @PatchMapping("/{id}")
+    @PreAuthorize("hasAuthority('N2')")
     public ResponseEntity<?> atualizarStatus(@PathVariable Long id, @RequestBody Map<String, String> body) {
         
         Optional<Reserva> reservaOpt = reservaRepository.findById(id);
