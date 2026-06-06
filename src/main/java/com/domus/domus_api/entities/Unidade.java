@@ -19,10 +19,5 @@ public class Unidade {
     private String numero;
 
     @Column(nullable = false)
-    private String status = "VAGA";
-
-    // Aqui é onde vinculamos a unidade ao morador
-    @ManyToOne
-    @JoinColumn(name = "usuario_id")
-    private Usuario morador;
+    private String status = "VAGA"; // Estados possíveis: OCUPADA, VAGA, REFORMA
 }

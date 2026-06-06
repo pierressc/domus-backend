@@ -8,6 +8,8 @@ import java.util.Optional;
 @Repository
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     
-    // O Spring Boot já cria o código SQL (SELECT * FROM usuarios WHERE email = ?)
+    // Busca apenas usuários ativos para o fluxo de login (Soft Delete)
+    Optional<Usuario> findByEmailAndAtivoTrue(String email);
+    
     Optional<Usuario> findByEmail(String email);
 }

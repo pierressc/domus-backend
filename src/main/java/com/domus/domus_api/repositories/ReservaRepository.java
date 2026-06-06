@@ -8,11 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.List;
 
 @Repository
 public interface ReservaRepository extends JpaRepository<Reserva, Long> {
 
-    // A mágica matemática do RF06 para verificar sobreposição de horários
+    // RF05: Permite que o morador veja apenas o seu próprio histórico de reservas
+    List<Reserva> findByMoradorId(Long moradorId);
+
     @Query("SELECT COUNT(r) > 0 FROM Reserva r WHERE r.local = :local " +
            "AND r.dataReserva = :data AND r.status = 'APROVADA' " +
            "AND r.horaInicio < :horaFim AND r.horaFim > :horaInicio")

@@ -31,4 +31,9 @@ public class Usuario {
 
     @Column(nullable = false)
     private Boolean ativo = true; // Prepara o terreno para o Soft Delete futuro
+
+    // CORREÇÃO: Vincula o morador à sua respectiva unidade residencial
+    @ManyToOne
+    @JoinColumn(name = "unidade_id")
+    private Unidade unidade;
 }

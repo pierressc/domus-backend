@@ -20,7 +20,11 @@ public class Ocorrencia {
     private LocalDate data = LocalDate.now();
 
     @Column(nullable = false)
-    private String status = "ABERTA";
+    private String status = "ABERTA"; // Estados: ABERTA, EM_ANALISE, EM_ATENDIMENTO, RESOLVIDA, FECHADA
+
+    // CORREÇÃO: Adicionado o campo para classificação por prioridade (RF08)
+    @Column(nullable = false)
+    private String prioridade = "MEDIA"; // Ex: BAIXA, MEDIA, ALTA
 
     @ManyToOne
     @JoinColumn(name = "usuario_id", nullable = false)
