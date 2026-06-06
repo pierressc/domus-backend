@@ -11,7 +11,6 @@ import java.time.temporal.ChronoUnit;
 @Service
 public class TokenService {
 
-    // O Spring vai no application.properties e injeta o valor aqui dentro!
     @Value("${api.security.token.secret}")
     private String secret;
 
@@ -22,12 +21,12 @@ public class TokenService {
                 .withIssuer("domus-api")
                 .withSubject(usuario.getEmail())
                 .withClaim("id", usuario.getId())
+                .withClaim("nome", usuario.getNome()) // CORREÇÃO: Alimenta o {{ usuarioNome }} do painel Angular
                 .withClaim("perfil", usuario.getPerfil())
                 .withExpiresAt(Instant.now().plus(2, ChronoUnit.HOURS))
                 .sign(algorithm);
     }
 
-    // Método para ler o token, validar a assinatura e extrair o e-mail (subject)
     public String validateToken(String token) {
         try {
             Algorithm algorithm = Algorithm.HMAC256(secret);
@@ -37,8 +36,8 @@ public class TokenService {
                     .verify(token)
                     .getSubject();
         } catch (Exception exception) {
-            // Se o token for inválido, expirado ou adulterado, retorna vazio
-            return ""; 
+            // CORREÇÃO: Retorna null para o SecurityFilter saber que o token está inválido ou expirado
+            return null; 
         }
     }
 }
