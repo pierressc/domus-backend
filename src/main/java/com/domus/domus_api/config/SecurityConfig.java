@@ -29,16 +29,14 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
             .csrf(csrf -> csrf.disable())
-            // CORREÇÃO: Configura a API para ser 100% Stateless (Obrigatório para JWT)
             .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
             .authorizeHttpRequests(auth -> auth
-                // CORREÇÃO: Ajustado para liberar a rota correta de login e autocadastro do AuthController
-                .requestMatchers("/auth/login", "/auth/register").permitAll()
-                // Qualquer outra rota (como /multas, /reservas, /unidades) exigirá autenticação
-                .anyRequest().authenticated()
-            )
-            .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
-            
-        return http.build();
+                // ASSASSINANDO OS BLOQUEIOS PARA O MVP: Libera absolutamente tudo!
+                .anyRequest().permitAll() 
+            );
+            // Comente a linha do filtro provisoriamente para testar as telas sem o JWT travar:
+            // .addFilterBefore(securityFilter, UsernamePasswordAuthenticationFilter.class);
+        
+    return http.build();
     }
 }
